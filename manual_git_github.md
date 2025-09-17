@@ -37,7 +37,7 @@ Para añadir la clave al agente SSH sera necesario ejecutar los siguientes coman
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_ed25519
 ```
-![imagen añadir clave ssh](/img/key.png)
+![imagen añadir clave ssh](/img/Key.png)
 
 ## Comprobacion de conexión
 
