@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Buscar Alojamiento</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f2f2f2;
+    }
+    .card {
+        width: 420px;
+        margin: 40px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        border: 2px solid #ccc;
+    }
+    h2 {
+        text-align: center;
+        margin-top: 0;
+    }
+    label {
+        font-weight: bold;
+    }
+    select, input {
+        width: 100%;
+        padding: 8px;
+        margin: 8px 0 16px 0;
+    }
+    .btn {
+        width: 100%;
+        padding: 10px;
+        background: #0078ff;
+        border: none;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 6px;
+    }
+    .mensaje {
+        margin-top: 15px;
+        padding: 10px;
+        border-radius: 6px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .error {
+        background: #ffcccc;
+        border: 1px solid #ff0000;
+    }
+    .ok {
+        background: #ccffcc;
+        border: 1px solid #00aa00;
+    }
+</style>
+</head>
+<body>
+
+<div class="card">
+    <h2>🏨 Buscar Alojamiento</h2>
+
+    <label>Ubicación:</label>
+    <select>
+        <option>Selecciona ubicación</option>
+        <option>Barcelona</option>
+        <option>Valencia</option>
+        <option>Madrid</option>
+    </select>
+
+    <label>Check-in:</label>
+    <input type="date">
+
+    <label>Check-out:</label>
+    <input type="date">
+
+    <button class="btn">🔍 Buscar</button>
+
+    <!-- Muestra uno de estos mensajes -->
+    <div class="mensaje error">❌ Por favor, completa todos los campos</div>
+    <!-- <div class="mensaje ok">✅ ¡Búsqueda realizada!</div> -->
+</div>
+
+</body>
+</html>
