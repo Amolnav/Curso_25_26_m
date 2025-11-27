@@ -2,13 +2,15 @@ export function createEjercicioRick() {
     const STORAGE_KEY = "cacheRick"
 
     // Función para hacer fetch de la API de Rick and Morty
-    function fetchingRick() {
-        return fetch(`https://rickandmortyapi.com/api/character`)
+    function fetchingRick(endpoint) {
+        return fetch(`https://rickandmortyapi.com/api/character?name=${endpoint}`)
         .then((res) => {
             if (!res.ok) throw new Error("Response not ok");
             return res.json();
         })
-        .then((data) => data)
+        .then((data) => {
+            console.log(data)
+            return data})
         .catch(err => {
             throw new Error(err);
         });
@@ -28,12 +30,10 @@ export function createEjercicioRick() {
         }
 
         // Si no hay cache, hacemos fetch a la API
-        fetchingRick().then((data) => {
-            const dataApp = data.results;
-            // Filtramos los personajes que coincidan con el nombre buscado
-            const personajes = dataApp.filter((personaje) =>
-                personaje.name.toLowerCase().includes(nombre)
-            );
+        fetchingRick(nombre).then((data) => {
+            const personajes = data.results;
+            console.log("LA BUSQUEDA");
+            console.log(personajes);
             // Guardamos en cache los resultados para futuras búsquedas
             guardarCache(nombre, personajes);
             // Pintamos los personajes en el DOM
