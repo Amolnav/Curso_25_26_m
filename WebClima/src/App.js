@@ -1,7 +1,8 @@
 import calcularImagen from "./helpers/calcularImagen";
 import fetching from "./helpers/fetching";
+import localStorageManager from "./helpers/localStorageManager";
 
-    function App() {
+function App() {
     // Contenedor principal
     const appDiv = document.createElement("div");
 
@@ -29,10 +30,48 @@ import fetching from "./helpers/fetching";
     btnBuscar.type = "submit";
     btnBuscar.textContent = "Buscar 🔍";
 
+    const favDiv = document.createElement("div")
+
+
     // Construir el DOM
     form.append(buscador, btnBuscar);
     weatherDiv.append(ciudad, temp, tempFeeling, weather);
-    appDiv.append(title, weatherDiv, form);
+    appDiv.append(title, weatherDiv, form, favDiv);
+
+
+    //Funcion para cargar el clima
+    const cargarWeather = async (cityName) => {
+        try {
+            const data = await fetching(cityName);
+            
+            // Actualizar información del clima
+            ciudad.textContent = data.name;
+            temp.textContent = Math.round(data.main.temp);
+            tempFeeling.textContent = `Feels like: ${Math.round(data.main.feels_like)}°`;
+            weather.textContent = data.weather[0].main;
+            
+            // Actualizar imagen de fondo
+            const img = calcularImagen(data);
+            weatherDiv.style.backgroundImage = `url('/img/${img}')`;
+            
+        } catch (error) {
+            console.error("Error al obtener el clima:", error);
+        }
+    }
+
+    // Funcion para guardar añadir favoritos
+    const newFav = (cityName) => {
+        const favCard = document.createElement("div")
+        favCard.classList.add("fav-card");
+        const favCity = document.createElement("h2")
+        favCity.textContent = cityName
+        favCard.append(favCity)
+        favDiv.append(favCard)
+    }
+    //Cargar los favoritos
+    localStorageManager().cargar().forEach((fav) => {
+        newFav(fav)
+    })
 
     // Busqueda
     form.addEventListener("submit", async (e) => {
@@ -40,23 +79,29 @@ import fetching from "./helpers/fetching";
 
     const cityName = buscador.value
     if (!cityName) return;
+    cargarWeather(cityName)
+    });
 
-    try {
-        const data = await fetching(cityName);
-        
-        // Actualizar información del clima
-        ciudad.textContent = data.name;
-        temp.textContent = Math.round(data.main.temp);
-        tempFeeling.textContent = `Feels like: ${Math.round(data.main.feels_like)}°`;
-        weather.textContent = data.weather[0].main;
-        
-        // Actualizar imagen de fondo
-        const img = calcularImagen(data);
-        weatherDiv.style.backgroundImage = `url('/img/${img}')`;
-        
-    } catch (error) {
-        console.error("Error al obtener el clima:", error);
-    }
+    // Añadir a favoritos
+    weatherDiv.addEventListener("dblclick", () => {
+        if (!ciudad.textContent) return
+        newFav(ciudad.textContent)
+        localStorageManager().guardar(ciudad.textContent)
+    })
+    // Cargar el favorito
+    favDiv.addEventListener("click", (e) => {
+        const card = e.target.closest(".fav-card"); 
+        const cityName = card.querySelector("h2").textContent;
+        cargarWeather(cityName)
+    })
+
+    // Borrar un favorito
+    favDiv.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        const card = e.target.closest(".fav-card"); 
+        const cityName = card.querySelector("h2").textContent;
+        favDiv.removeChild(card)
+        localStorageManager().eliminar(cityName)
     });
 
     return appDiv;

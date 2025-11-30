@@ -16,6 +16,11 @@ Aplicación web que muestra el clima actual de cualquier ciudad usando la API de
   - 🌡️ Temperaturas extremas
   - 🌈 Arcoíris
   - 🌙 Noche clara
+- ⭐ Sistema de favoritos:
+   - Añade una ciudad a favoritos haciendo doble click en la tarjeta del clima
+   - Lista de ciudades favoritas visibles en la interfaz
+   - Haz click en un favorito para volver a cargar su clima
+   - ♻️ Persistencia automática en LocalStorage (tus favoritos se conservan incluso cerrando la app)
 - Diseño responsive y moderno
 - Interfaz minimalista y atractiva
 
@@ -34,6 +39,7 @@ weather-forecast-app/
 ├── src/
 │   ├── helpers/
 │   │   ├── calcularImagen.js  # Devuelve imagen según datos del clima
+│   │   ├── localStorageManager.js  # Funciones para manejar el LocalStorage
 │   │   └── fetching.js        # Obtiene datos de la API
 │   ├── App.js            # Componente principal
 │   ├── main.js           # Punto de entrada
@@ -81,6 +87,9 @@ weather-forecast-app/
 ## 📸 Capturas de Pantalla
 
 ![Vista previa de la App](./public/img/EjemploApp.png)
+
+![Vista previa de la App con favoritos](./public/img/EjemploAppConFavs.png)
+
 
 ## 🔑 API Key
 
